@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Forget Me Not</string>
+    <string name="forget_me_not">Forget Me Not</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm password</string>
+</resources>
