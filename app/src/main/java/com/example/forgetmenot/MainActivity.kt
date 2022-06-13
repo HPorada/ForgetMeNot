@@ -22,17 +22,10 @@ class MainActivity : AppCompatActivity() {
     private var filePath: Uri? = null
     private var firebaseStore: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
-    lateinit var imagePreview: ImageView
-    lateinit var btn_choose_image: Button
-    lateinit var btn_upload_image: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        btn_choose_image = findViewById(R.id.btn_choose_image)
-        btn_upload_image = findViewById(R.id.btn_upload_image)
-        imagePreview = findViewById(R.id.image_preview)
 
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
@@ -44,37 +37,15 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun onChooseClick(view: View) {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select a picture"), PICK_IMAGE_REQUEST)
+    fun onImageClick(view: View) {
+        val intent = Intent(this, AddImageActivity::class.java)
+        startActivity(intent)
     }
 
-    fun onUploadClick(view: View) {
-        if (filePath != null) {
-            val ref = storageReference?.child("myImages/" + UUID.randomUUID().toString())
-            val uploadTask = ref?.putFile(filePath!!)
-
-        } else {
-            Toast.makeText(this, "Please Upload an Image", Toast.LENGTH_SHORT).show()
-        }
+    fun onNoteClick(view: View) {
+        val intent = Intent(this, AddNoteActivity::class.java)
+        startActivity(intent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            if (data == null || data.data == null) {
-                return
-            }
 
-            filePath = data.data
-            try {
-                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
-                imagePreview.setImageBitmap(bitmap)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-    }
 }

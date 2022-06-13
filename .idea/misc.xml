@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Hania/AndroidStudioProjects/ForgetMeNot/app/src/main/res/font/amarante.xml" value="0.39739583333333334" />
+        <entry key="..\:/Users/Hania/AndroidStudioProjects/ForgetMeNot/app/src/main/res/layout/activity_image.xml" value="0.3671875" />
         <entry key="..\:/Users/Hania/AndroidStudioProjects/ForgetMeNot/app/src/main/res/layout/activity_login.xml" value="0.3482789855072464" />
         <entry key="..\:/Users/Hania/AndroidStudioProjects/ForgetMeNot/app/src/main/res/layout/activity_main.xml" value="0.3482789855072464" />
+        <entry key="..\:/Users/Hania/AndroidStudioProjects/ForgetMeNot/app/src/main/res/layout/activity_note.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Hania/AndroidStudioProjects/ForgetMeNot/app/src/main/res/layout/activity_register.xml" value="0.3482789855072464" />
+        <entry key="..\:/Users/Hania/AndroidStudioProjects/ForgetMeNot/app/src/main/res/layout/activity_splash.xml" value="0.1" />
       </map>
     </option>
   </component>

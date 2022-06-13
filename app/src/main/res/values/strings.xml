@@ -6,4 +6,6 @@
     <string name="log_in">Log in</string>
     <string name="register">Register</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="choose_image">Choose image</string>
+    <string name="upload_image">Upload image</string>
 </resources>

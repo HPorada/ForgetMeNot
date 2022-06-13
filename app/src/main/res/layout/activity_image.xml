@@ -7,28 +7,30 @@
     android:orientation="vertical"
     android:padding="30dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".AddImageActivity"
+    tools:showIn="@layout/activity_image">
+
+    <ImageView
+        android:id="@+id/image_preview"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/purple_700"
+        android:scaleType="centerCrop" />
 
     <Button
-        android:id="@+id/btnImage"
+        android:id="@+id/btn_choose_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onImageClick"
-        android:text="Add image" />
+        android:layout_marginTop="20dp"
+        android:onClick="onChooseClick"
+        android:text="@string/choose_image" />
 
     <Button
-        android:id="@+id/btnNote"
+        android:id="@+id/btn_upload_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onNoteClick"
-        android:text="Add note" />
+        android:onClick="onUploadClick"
+        android:text="@string/upload_image" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onLogoutClick"
-        android:text="Log out" />
 
 </LinearLayout>
