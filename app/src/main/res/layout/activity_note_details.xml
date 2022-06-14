@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".note.AddNote">
+    tools:context=".note.NoteDetails">
 
     <com.google.android.material.appbar.AppBarLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.NoActionBar.AppBarOverlay">
@@ -21,24 +19,18 @@
             android:background="@color/dark_blue"
             app:popupTheme="@style/Theme.NoActionBar.PopupOverlay">
 
-
-            <EditText
-                android:id="@+id/addNoteTitle"
+            <TextView
+                android:id="@+id/noteDetailsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/transparent"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="Add title"
-                android:textColor="#fff"
-                android:textColorHint="#FFFFFF"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
                 android:textStyle="bold" />
-
         </androidx.appcompat.widget.Toolbar>
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_add_note" />
+    <include layout="@layout/content_note_details" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -47,8 +39,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="48dp"
         app:backgroundTint="@color/dark_blue"
-        app:maxImageSize="30dp"
-        app:srcCompat="@drawable/ic_baseline_save_24" />
-
-
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
