@@ -32,26 +32,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="120dp"
+        app:backgroundTint="@color/dark_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_baseline_note_add_white_24"
+        app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addPhotoFloat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="48dp"
         app:backgroundTint="@color/dark_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="35dp"
-        app:srcCompat="@drawable/ic_baseline_note_add_24" />
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/addPhotoFloat"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        android:layout_marginEnd="48dp"-->
-<!--        android:layout_marginBottom="48dp"-->
-<!--        app:backgroundTint="@color/dark_blue"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:maxImageSize="35dp"-->
-<!--        app:srcCompat="@drawable/ic_baseline_add_a_photo_24" />-->
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_baseline_add_a_photo_white_24"
+        app:tint="@color/white" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

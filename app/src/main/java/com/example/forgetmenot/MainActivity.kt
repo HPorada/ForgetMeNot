@@ -19,6 +19,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.forgetmenot.auth.Login
 import com.example.forgetmenot.auth.Register
 import com.example.forgetmenot.model.Note
 import com.example.forgetmenot.note.AddNote
@@ -73,36 +74,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 noteViewHolder.noteTitle.text = note.title
                 noteViewHolder.noteContent.text = note.content
 
-//                val code = randomColor
-//                noteViewHolder.mCardView.setCardBackgroundColor(
-//                    noteViewHolder.view.resources.getColor(
-//                        code,
-//                        null
-//                    )
-//                )
 
                 val docId: String = noteAdapter!!.snapshots.getSnapshot(i).id
                 noteViewHolder.view.setOnClickListener { v ->
                     val i = Intent(v.context, NoteDetails::class.java)
                     i.putExtra("title", note.title)
                     i.putExtra("content", note.content)
-//                    i.putExtra("code", code)
+                    i.putExtra("date", note.endDate)
                     i.putExtra("noteId", docId)
                     v.context.startActivity(i)
                 }
+
                 val menuIcon = noteViewHolder.view.findViewById<ImageView>(R.id.menuIcon)
                 menuIcon.setOnClickListener { view ->
-                    val docId: String = noteAdapter!!.getSnapshots().getSnapshot(i).getId()
+                    val docId: String = noteAdapter!!.snapshots.getSnapshot(i).id
                     val menu = PopupMenu(view.context, view)
                     menu.gravity = Gravity.END
                     menu.menu.add("Edit").setOnMenuItemClickListener {
                         val i = Intent(view.context, EditNote::class.java)
                         i.putExtra("title", note.title)
                         i.putExtra("content", note.content)
+                        i.putExtra("date", note.endDate)
                         i.putExtra("noteId", docId)
                         startActivity(i)
                         false
                     }
+
                     menu.menu.add("Delete").setOnMenuItemClickListener {
                         val docref = fStore!!.collection("notes").document(
                             user!!.uid
@@ -129,22 +126,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         noteLists = findViewById(R.id.noteList)
         drawerLayout = findViewById(R.id.drawer)
         nav_view = findViewById(R.id.nav_view)
+
         nav_view.setNavigationItemSelectedListener(this)
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle!!)
         toggle!!.isDrawerIndicatorEnabled = true
         toggle!!.syncState()
-        noteLists.setItemAnimator(null)
-        noteLists.setLayoutManager(
-            StaggeredGridLayoutManager(
-                2,
-                StaggeredGridLayoutManager.VERTICAL
-            )
+        noteLists.itemAnimator = null
+        noteLists.layoutManager = StaggeredGridLayoutManager(
+            2, StaggeredGridLayoutManager.VERTICAL
         )
-        noteLists.setAdapter(noteAdapter)
+        noteLists.adapter = noteAdapter
+
         val headerView = nav_view.getHeaderView(0)
+
         val username = headerView.findViewById<TextView>(R.id.userDisplayName)
         val userEmail = headerView.findViewById<TextView>(R.id.userDisplayEmail)
+
         if (user!!.isAnonymous) {
             userEmail.visibility = View.GONE
             username.text = "Temporary User"
@@ -152,18 +150,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             userEmail.text = user!!.email
             username.text = user!!.displayName
         }
+
         val fab = findViewById<FloatingActionButton>(R.id.addNoteFloat)
         fab.setOnClickListener { view -> startActivity(Intent(view.context, AddNote::class.java)) }
+
+        val fabPhoto = findViewById<FloatingActionButton>(R.id.addPhotoFloat)
+        fabPhoto.setOnClickListener { view ->
+            startActivity(
+                Intent(
+                    view.context,
+                    AddImageActivity::class.java
+                )
+            )
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         drawerLayout!!.closeDrawer(GravityCompat.START)
         when (item.itemId) {
+            R.id.notes -> startActivity(Intent(this, MainActivity::class.java))
             R.id.addNote -> startActivity(Intent(this, AddNote::class.java))
-            R.id.sync -> if (user!!.isAnonymous) {
+            R.id.addImage -> startActivity(Intent(this, AddImageActivity::class.java))
+            R.id.login -> if (user!!.isAnonymous) {
+                startActivity(Intent(this, Login::class.java))
+            } else {
+                Toast.makeText(this, "You are logged in.", Toast.LENGTH_SHORT).show()
+            }
+            R.id.register -> if (user!!.isAnonymous) {
                 startActivity(Intent(this, Register::class.java))
             } else {
-                Toast.makeText(this, "You are connected.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "You are registered.", Toast.LENGTH_SHORT).show()
             }
             R.id.logout -> //                FirebaseAuth.getInstance().signOut();
                 checkUser()
@@ -185,9 +201,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun displayAlert() {
         val warning = AlertDialog.Builder(this)
             .setTitle("Are you sure?")
-            .setMessage("You are looged in with temporary account. Logging out will result in deleting all notes.")
+            .setMessage("You are logged in with temporary account. Logging out will result in deleting all notes.")
             .setPositiveButton(
-                "Sync notes"
+                "Register"
             ) { dialogInterface, i ->
                 startActivity(Intent(applicationContext, Register::class.java))
                 finish()
@@ -212,7 +228,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.settings) {
-            Toast.makeText(this, "Settings Menu is Clicked.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Settings menu was clicked.", Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -231,24 +247,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-//    private val randomColor: Int
-//        private get() {
-//            val colorCode: MutableList<Int> = ArrayList()
-//            colorCode.add(R.color.blue)
-//            colorCode.add(R.color.yellow)
-//            colorCode.add(R.color.skyblue)
-//            colorCode.add(R.color.lightPurple)
-//            colorCode.add(R.color.lightGreen)
-//            colorCode.add(R.color.gray)
-//            colorCode.add(R.color.pink)
-//            colorCode.add(R.color.red)
-//            colorCode.add(R.color.greenlight)
-//            colorCode.add(R.color.notgreen)
-//            val randomColor = Random()
-//            val number = randomColor.nextInt(colorCode.size)
-//            return colorCode[number]
-//        }
-
     override fun onStart() {
         super.onStart()
         noteAdapter.startListening()
@@ -261,53 +259,3 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 }
-
-//import android.app.Activity
-//import android.content.Intent
-//import android.net.Uri
-//import androidx.appcompat.app.AppCompatActivity
-//import android.os.Bundle
-//import android.provider.MediaStore
-//import android.view.View
-//import android.widget.Button
-//import android.widget.ImageView
-//import android.widget.Toast
-//import com.google.firebase.auth.ktx.auth
-//import com.google.firebase.ktx.Firebase
-//import com.google.firebase.storage.FirebaseStorage
-//import com.google.firebase.storage.StorageReference
-//import java.io.IOException
-//import java.util.*
-//
-//class MainActivity : AppCompatActivity() {
-//    private val PICK_IMAGE_REQUEST = 71
-//    private var filePath: Uri? = null
-//    private var firebaseStore: FirebaseStorage? = null
-//    private var storageReference: StorageReference? = null
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//
-//        firebaseStore = FirebaseStorage.getInstance()
-//        storageReference = FirebaseStorage.getInstance().reference
-//    }
-//
-//    fun onLogoutClick(view: View) {
-//        Firebase.auth.signOut()
-//        val intent = Intent(this, LoginActivity::class.java)
-//        startActivity(intent)
-//    }
-//
-//    fun onImageClick(view: View) {
-//        val intent = Intent(this, AddImageActivity::class.java)
-//        startActivity(intent)
-//    }
-//
-//    fun onNoteClick(view: View) {
-//        val intent = Intent(this, AddNoteActivity::class.java)
-//        startActivity(intent)
-//    }
-//
-//
-//}

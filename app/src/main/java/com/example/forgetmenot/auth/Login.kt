@@ -51,6 +51,7 @@ class Login : AppCompatActivity() {
 
             // delete notes first
             spinner.visibility = View.VISIBLE
+
             if (fAuth!!.currentUser!!.isAnonymous) {
                 val user = fAuth!!.currentUser
                 fStore!!.collection("notes").document(user!!.uid).delete().addOnSuccessListener {

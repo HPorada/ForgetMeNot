@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="General">
+    <item android:title="Memories">
         <menu>
             <item
                 android:id="@+id/notes"
@@ -9,8 +9,29 @@
                 android:title="My memories" />
             <item
                 android:id="@+id/addNote"
-                android:icon="@drawable/ic_baseline_add_circle_24"
-                android:title="Add a memory" />
+                android:icon="@drawable/ic_baseline_note_add_24"
+                android:title="Add a note" />
+            <item
+                android:id="@+id/addImage"
+                android:icon="@drawable/ic_baseline_add_a_photo_24"
+                android:title="Add a photo" />
+        </menu>
+    </item>
+
+    <item android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/login"
+                android:icon="@drawable/ic_baseline_person_24"
+                android:title="Login" />
+            <item
+                android:id="@+id/register"
+                android:icon="@drawable/ic_baseline_person_add_24"
+                android:title="Register" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_baseline_vpn_key_24"
+                android:title="Logout" />
         </menu>
     </item>
 
@@ -24,19 +45,6 @@
                 android:id="@+id/shareApp"
                 android:icon="@drawable/ic_baseline_share_24"
                 android:title="Share app" />
-        </menu>
-    </item>
-
-    <item android:title="Account">
-        <menu>
-            <item
-                android:id="@+id/sync"
-                android:icon="@drawable/ic_baseline_account_circle_24"
-                android:title="Register" />
-            <item
-                android:id="@+id/logout"
-                android:icon="@drawable/ic_baseline_vpn_key_24"
-                android:title="Logout" />
         </menu>
     </item>
 </menu>

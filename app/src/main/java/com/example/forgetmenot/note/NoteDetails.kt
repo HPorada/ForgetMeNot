@@ -39,6 +39,7 @@ class NoteDetails : AppCompatActivity() {
             val i = Intent(view.context, EditNote::class.java)
             i.putExtra("title", data.getStringExtra("title"))
             i.putExtra("content", data.getStringExtra("content"))
+            i.putExtra("date", data.getStringExtra("date"))
             i.putExtra("noteId", data.getStringExtra("noteId"))
             startActivity(i)
         }

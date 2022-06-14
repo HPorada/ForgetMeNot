@@ -86,7 +86,7 @@
                 android:padding="5dp"
                 android:text="TextView"
                 android:textAlignment="viewStart"
-                android:textColor="#000"
+                android:textColor="#000000"
                 android:textSize="15sp"
                 android:textStyle="normal|italic"
                 app:layout_constraintBottom_toTopOf="@+id/cardView"

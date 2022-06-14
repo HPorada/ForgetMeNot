@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.IOException
@@ -23,6 +25,8 @@ class AddImageActivity : AppCompatActivity() {
     lateinit var imagePreview: ImageView
     lateinit var btn_choose_image: Button
     lateinit var btn_upload_image: Button
+    var fAuth: FirebaseAuth? = null
+    var user: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,9 @@ class AddImageActivity : AppCompatActivity() {
 
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
+
+        fAuth = FirebaseAuth.getInstance()
+        user = fAuth!!.currentUser
     }
 
     fun onChooseClick(view: View) {
@@ -45,8 +52,13 @@ class AddImageActivity : AppCompatActivity() {
 
     fun onUploadClick(view: View) {
         if (filePath != null) {
-            val ref = storageReference?.child("myImages/" + UUID.randomUUID().toString())
+            val ref = storageReference?.child("myImages/" + user!!.uid + "/" + UUID.randomUUID().toString())
             val uploadTask = ref?.putFile(filePath!!)
+
+//            fStore!!.collection("notes").document(
+//                user!!.uid
+//            ).collection("myNotes").document()
+
 
         } else {
             Toast.makeText(this, "Upload an image", Toast.LENGTH_SHORT).show()
