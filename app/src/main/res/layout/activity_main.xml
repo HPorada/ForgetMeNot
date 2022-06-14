@@ -1,34 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="30dp"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnImage"
+    <include
+        layout="@layout/content_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onImageClick"
-        android:text="Add image" />
+        android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/btnNote"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onNoteClick"
-        android:text="Add note" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onLogoutClick"
-        android:text="Log out" />
+</androidx.drawerlayout.widget.DrawerLayout>
 
-</LinearLayout>
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:orientation="vertical"-->
+    <!--    android:padding="30dp"-->
+    <!--    app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+    <!--    tools:context=".MainActivity"-->
+    <!--    tools:showIn="@layout/activity_main">-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btnImage"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:onClick="onImageClick"-->
+    <!--        android:text="Add image" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btnNote"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:onClick="onNoteClick"-->
+    <!--        android:text="Add note" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btnLogout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:onClick="onLogoutClick"-->
+    <!--        android:text="Log out" />-->
+
+    <!--</LinearLayout>-->

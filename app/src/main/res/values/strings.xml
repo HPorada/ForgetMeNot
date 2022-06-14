@@ -8,4 +8,6 @@
     <string name="confirm_password">Confirm password</string>
     <string name="choose_image">Choose image</string>
     <string name="upload_image">Upload image</string>
+    <string name="close">Close</string>
+    <string name="description">Keep your memories with you</string>
 </resources>

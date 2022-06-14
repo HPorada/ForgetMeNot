@@ -23,4 +23,9 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
     </style>
+
+    <style name="Theme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
