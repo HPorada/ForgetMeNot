@@ -70,21 +70,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 @SuppressLint("RecyclerView") i: Int,
                 note: Note
             ) {
-                noteViewHolder.noteTitle.setText(note.title)
-                noteViewHolder.noteContent.setText(note.content)
-                val code = randomColor
-                noteViewHolder.mCardView.setCardBackgroundColor(
-                    noteViewHolder.view.resources.getColor(
-                        code,
-                        null
-                    )
-                )
-                val docId: String = noteAdapter!!.getSnapshots().getSnapshot(i).getId()
+                noteViewHolder.noteTitle.text = note.title
+                noteViewHolder.noteContent.text = note.content
+
+//                val code = randomColor
+//                noteViewHolder.mCardView.setCardBackgroundColor(
+//                    noteViewHolder.view.resources.getColor(
+//                        code,
+//                        null
+//                    )
+//                )
+
+                val docId: String = noteAdapter!!.snapshots.getSnapshot(i).id
                 noteViewHolder.view.setOnClickListener { v ->
                     val i = Intent(v.context, NoteDetails::class.java)
                     i.putExtra("title", note.title)
                     i.putExtra("content", note.content)
-                    i.putExtra("code", code)
+//                    i.putExtra("code", code)
                     i.putExtra("noteId", docId)
                     v.context.startActivity(i)
                 }
@@ -229,23 +231,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private val randomColor: Int
-        private get() {
-            val colorCode: MutableList<Int> = ArrayList()
-            colorCode.add(R.color.blue)
-            colorCode.add(R.color.yellow)
-            colorCode.add(R.color.skyblue)
-            colorCode.add(R.color.lightPurple)
-            colorCode.add(R.color.lightGreen)
-            colorCode.add(R.color.gray)
-            colorCode.add(R.color.pink)
-            colorCode.add(R.color.red)
-            colorCode.add(R.color.greenlight)
-            colorCode.add(R.color.notgreen)
-            val randomColor = Random()
-            val number = randomColor.nextInt(colorCode.size)
-            return colorCode[number]
-        }
+//    private val randomColor: Int
+//        private get() {
+//            val colorCode: MutableList<Int> = ArrayList()
+//            colorCode.add(R.color.blue)
+//            colorCode.add(R.color.yellow)
+//            colorCode.add(R.color.skyblue)
+//            colorCode.add(R.color.lightPurple)
+//            colorCode.add(R.color.lightGreen)
+//            colorCode.add(R.color.gray)
+//            colorCode.add(R.color.pink)
+//            colorCode.add(R.color.red)
+//            colorCode.add(R.color.greenlight)
+//            colorCode.add(R.color.notgreen)
+//            val randomColor = Random()
+//            val number = randomColor.nextInt(colorCode.size)
+//            return colorCode[number]
+//        }
 
     override fun onStart() {
         super.onStart()

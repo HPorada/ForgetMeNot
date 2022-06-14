@@ -78,7 +78,7 @@ class Register : AppCompatActivity() {
                     "Failed to Connect. Try Again.",
                     Toast.LENGTH_SHORT
                 ).show()
-                spinner.setVisibility(View.VISIBLE)
+                spinner.visibility = View.VISIBLE
             }
         })
     }

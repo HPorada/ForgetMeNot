@@ -22,14 +22,18 @@ class NoteDetails : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         data = intent
         val content = findViewById<TextView>(R.id.noteDetailsContent)
         val title = findViewById<TextView>(R.id.noteDetailsTitle)
+
         content.movementMethod = ScrollingMovementMethod()
         content.text = data.getStringExtra("content")
         title.text = data.getStringExtra("title")
-        content.setBackgroundColor(resources.getColor(data.getIntExtra("code", 0), null))
+
+//        content.setBackgroundColor(resources.getColor(data.getIntExtra("code", 0), null))
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
             val i = Intent(view.context, EditNote::class.java)

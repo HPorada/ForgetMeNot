@@ -34,7 +34,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AddImageActivity" />
-        <activity android:name=".AddNoteActivity" />
 
         <activity android:name=".note.AddNote" />
         <activity android:name=".note.EditNote" />

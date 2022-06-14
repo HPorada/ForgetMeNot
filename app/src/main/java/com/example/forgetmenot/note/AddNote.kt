@@ -25,40 +25,47 @@ class AddNote : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
         fStore = FirebaseFirestore.getInstance()
         noteContent = findViewById(R.id.addNoteContent)
         noteTitle = findViewById(R.id.addNoteTitle)
         progressBarSave = findViewById(R.id.progressBar)
         user = FirebaseAuth.getInstance().currentUser
+
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener(View.OnClickListener {
-            val nTitle = noteTitle.getText().toString()
-            val nContent = noteContent.getText().toString()
+            val nTitle = noteTitle.text.toString()
+            val nContent = noteContent.text.toString()
+
             if (nTitle.isEmpty() || nContent.isEmpty()) {
                 Toast.makeText(
                     this@AddNote,
-                    "Can not Save note with Empty Field.",
+                    "Can not save note with an empty field.",
                     Toast.LENGTH_SHORT
                 ).show()
                 return@OnClickListener
             }
-            progressBarSave.setVisibility(View.VISIBLE)
+            progressBarSave.visibility = View.VISIBLE
 
             // save note
             val docref = fStore!!.collection("notes").document(
                 user!!.uid
             ).collection("myNotes").document()
+
             val note: MutableMap<String, Any> = HashMap()
+
             note["title"] = nTitle
             note["content"] = nContent
+
             docref.set(note).addOnSuccessListener {
-                Toast.makeText(this@AddNote, "Note Added.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddNote, "Note successfully added.", Toast.LENGTH_SHORT).show()
                 onBackPressed()
             }.addOnFailureListener {
-                Toast.makeText(this@AddNote, "Error, Try again.", Toast.LENGTH_SHORT).show()
-                progressBarSave.setVisibility(View.VISIBLE)
+                Toast.makeText(this@AddNote, "Error, try again.", Toast.LENGTH_SHORT).show()
+                progressBarSave.visibility = View.VISIBLE
             }
         })
     }
@@ -71,7 +78,7 @@ class AddNote : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.close) {
-            Toast.makeText(this, "Not Saved.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Note not saved.", Toast.LENGTH_SHORT).show()
             onBackPressed()
         }
         return super.onOptionsItemSelected(item)

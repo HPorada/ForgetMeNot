@@ -26,34 +26,35 @@ class Adapter(var titles: List<String>, var content: List<String>) :
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.noteTitle.text = titles[position]
         holder.noteContent.text = content[position]
-        val code = randomColor
-        holder.mCardView.setCardBackgroundColor(holder.view.resources.getColor(code, null))
+
+//        val code = randomColor
+//        holder.mCardView.setCardBackgroundColor(holder.view.resources.getColor(code, null))
         holder.view.setOnClickListener { v ->
             val i = Intent(v.context, NoteDetails::class.java)
             i.putExtra("title", titles[position])
             i.putExtra("content", content[position])
-            i.putExtra("code", code)
+//            i.putExtra("code", code)
             v.context.startActivity(i)
         }
     }
 
-    private val randomColor: Int
-        private get() {
-            val colorCode: MutableList<Int> = ArrayList()
-            colorCode.add(R.color.blue)
-            colorCode.add(R.color.yellow)
-            colorCode.add(R.color.skyblue)
-            colorCode.add(R.color.lightPurple)
-            colorCode.add(R.color.lightGreen)
-            colorCode.add(R.color.gray)
-            colorCode.add(R.color.pink)
-            colorCode.add(R.color.red)
-            colorCode.add(R.color.greenlight)
-            colorCode.add(R.color.notgreen)
-            val randomColor = Random()
-            val number = randomColor.nextInt(colorCode.size)
-            return colorCode[number]
-        }
+//    private val randomColor: Int
+//        private get() {
+//            val colorCode: MutableList<Int> = ArrayList()
+//            colorCode.add(R.color.blue)
+//            colorCode.add(R.color.yellow)
+//            colorCode.add(R.color.skyblue)
+//            colorCode.add(R.color.lightPurple)
+//            colorCode.add(R.color.lightGreen)
+//            colorCode.add(R.color.gray)
+//            colorCode.add(R.color.pink)
+//            colorCode.add(R.color.red)
+//            colorCode.add(R.color.greenlight)
+//            colorCode.add(R.color.notgreen)
+//            val randomColor = Random()
+//            val number = randomColor.nextInt(colorCode.size)
+//            return colorCode[number]
+//        }
 
     override fun getItemCount(): Int {
         return titles.size
