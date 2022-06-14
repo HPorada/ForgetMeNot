@@ -17,12 +17,13 @@ class Splash : AppCompatActivity() {
 
         fAuth = FirebaseAuth.getInstance()
         val handler = Handler()
+
         handler.postDelayed({
-            // check if user is logged in
+            // check if there's a user logged in
             if (fAuth!!.currentUser != null) {
                 startActivity(Intent(applicationContext, MainActivity::class.java))
             } else {
-                // create new anonymous account
+                // if there's no logged in user, create new anonymous account
                 fAuth!!.signInAnonymously().addOnSuccessListener {
                     Toast.makeText(
                         this@Splash,
@@ -32,7 +33,9 @@ class Splash : AppCompatActivity() {
                     startActivity(Intent(applicationContext, MainActivity::class.java))
                     finish()
                 }.addOnFailureListener { e ->
-                    Toast.makeText(this@Splash, "Error! " + e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Splash,
+                        "Error! " + e.message,
+                        Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }
