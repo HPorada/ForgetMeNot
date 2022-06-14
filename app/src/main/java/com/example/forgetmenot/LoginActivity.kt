@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun firebaseSignIn() {
-        val button = findViewById<Button>(R.id.btn_login_reg)
+        val button = findViewById<Button>(R.id.btnLogin_reg)
 
         button?.isEnabled = false
         button?.alpha = 0.5f

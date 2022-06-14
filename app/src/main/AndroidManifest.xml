@@ -36,6 +36,13 @@
         <activity android:name=".AddImageActivity" />
         <activity android:name=".AddNoteActivity" />
 
+        <activity android:name=".note.AddNote" />
+        <activity android:name=".note.EditNote" />
+        <activity android:name=".note.NoteDetails" />
+
+        <activity android:name=".auth.Login" />
+        <activity android:name=".auth.Register" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

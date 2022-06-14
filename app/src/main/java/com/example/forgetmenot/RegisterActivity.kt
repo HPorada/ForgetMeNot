@@ -39,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun firebaseSignUp() {
-        val button = findViewById<Button>(R.id.btn_register_reg)
+        val button = findViewById<Button>(R.id.btnRegister_reg)
 
         button?.isEnabled = false
         button?.alpha = 0.5f
