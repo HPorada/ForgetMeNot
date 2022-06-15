@@ -49,6 +49,18 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
+                        android:id="@+id/ivLock"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/titles"
+                        app:layout_constraintEnd_toStartOf="@id/titles"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5"
+                        app:srcCompat="@drawable/ic_baseline_lock_24" />
+
+                    <ImageView
                         android:id="@+id/menuIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -60,17 +72,20 @@
                     <TextView
                         android:id="@+id/titles"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:padding="6dp"
                         android:text="TextView"
                         android:textAlignment="viewStart"
                         android:textColor="@color/dark_blue"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/menuIcon"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/ivLock"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -83,7 +98,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:padding="5dp"
+                android:padding="7dp"
                 android:text="TextView"
                 android:textAlignment="viewStart"
                 android:textColor="#000000"

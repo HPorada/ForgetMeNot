@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // prepare query to fetch all user's notes from the database
         val query = fStore!!.collection("notes").document(
             user!!.uid
-        ).collection("myNotes").orderBy("title", Query.Direction.DESCENDING)
+        ).collection("myNotes").orderBy("endDate", Query.Direction.DESCENDING)
 
         // get all user's notes from the database
         val allNotes: FirestoreRecyclerOptions<Note> = FirestoreRecyclerOptions.Builder<Note>()
@@ -75,14 +75,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 @SuppressLint("RecyclerView") i: Int,
                 note: Note
             ) {
-                noteViewHolder.noteTitle.text = note.title
-                noteViewHolder.noteContent.text = note.content
+                val check = checkDate(note.endDate)
 
+                if (check) {
+                    noteViewHolder.noteTitle.text = note.title
+                    noteViewHolder.noteContent.text = note.content
+
+                    val lock = noteViewHolder.view.findViewById<ImageView>(R.id.ivLock) as ImageView
+                    lock.setImageResource(R.drawable.ic_baseline_lock_open_24)
+
+                } else {
+                    noteViewHolder.noteTitle.text = note.title
+                    noteViewHolder.noteContent.text = "Memory unlocks on ${note.endDate}"
+
+                    val lock = noteViewHolder.view.findViewById<ImageView>(R.id.ivLock) as ImageView
+                    lock.setImageResource(R.drawable.ic_baseline_lock_24)
+                }
 
                 val docId: String = noteAdapter.snapshots.getSnapshot(i).id
                 noteViewHolder.view.setOnClickListener { v ->
-
-                    val check = checkDate(note.endDate)
 
                     if (check) {
                         val i = Intent(v.context, NoteDetails::class.java)
@@ -94,7 +105,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     } else {
                         Toast.makeText(
                             this@MainActivity,
-                            "The note will unlock on ${note.endDate}.",
+                            "The memory will unlock on ${note.endDate}.",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -188,9 +199,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val month = Calendar.getInstance().get(Calendar.MONTH)
             val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
 
-            val curDate = "$day/$month/$year"
+            val curDate = "$year/$month/$day"
 
-            val sdf = SimpleDateFormat("dd/MM/yyyy")
+            val sdf = SimpleDateFormat("yyyy/MM/dd")
 
             val cur: Date = sdf.parse(curDate) as Date
             val end: Date = endDate?.let { sdf.parse(it) } as Date
@@ -217,22 +228,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        drawerLayout!!.closeDrawer(GravityCompat.START)
+        drawerLayout.closeDrawer(GravityCompat.START)
         when (item.itemId) {
-            R.id.notes -> startActivity(Intent(this, MainActivity::class.java))
+            R.id.notes -> drawerLayout.closeDrawer(GravityCompat.START)
+
             R.id.addNote -> startActivity(Intent(this, AddNote::class.java))
+
             R.id.addImage -> startActivity(Intent(this, AddImageActivity::class.java))
+
             R.id.login -> if (user!!.isAnonymous) {
                 startActivity(Intent(this, Login::class.java))
             } else {
                 Toast.makeText(this, "You are logged in.", Toast.LENGTH_SHORT).show()
             }
+
             R.id.register -> if (user!!.isAnonymous) {
                 startActivity(Intent(this, Register::class.java))
             } else {
                 Toast.makeText(this, "You are registered.", Toast.LENGTH_SHORT).show()
             }
-            R.id.logout -> //                FirebaseAuth.getInstance().signOut();
+
+            R.id.logout ->
                 checkUser()
             else -> Toast.makeText(this, "Coming soon.", Toast.LENGTH_SHORT).show()
         }

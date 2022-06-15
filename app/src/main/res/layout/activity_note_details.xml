@@ -28,7 +28,17 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:text="Unlocked: "
+            android:textSize="18sp" />
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <include layout="@layout/content_note_details" />
 
@@ -41,6 +51,6 @@
         android:layout_marginBottom="48dp"
         app:backgroundTint="@color/dark_blue"
         app:maxImageSize="30dp"
-        app:tint="@color/white"
-        app:srcCompat="@drawable/ic_baseline_edit_white_24" />
+        app:srcCompat="@drawable/ic_baseline_edit_white_24"
+        app:tint="@color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -43,9 +43,11 @@ class AddNote : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         user = FirebaseAuth.getInstance().currentUser
 
         val year = Calendar.getInstance().get(Calendar.YEAR)
-        val month = Calendar.getInstance().get(Calendar.MONTH)
+        var month = Calendar.getInstance().get(Calendar.MONTH)
         val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        noteEnd = "$day/$month/$year"
+
+        month += 1
+        noteEnd = "$year/$month/$day"
 
         noteTitle.setText(noteEnd)
 
@@ -118,7 +120,7 @@ class AddNote : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
         val mon = month + 1
 
-        noteEnd = "$day/$mon/$year"
+        noteEnd = "$year/$mon/$day"
         btnDate.text = noteEnd
     }
 }

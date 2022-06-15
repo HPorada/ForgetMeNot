@@ -57,7 +57,7 @@ class EditNote : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             val year = Calendar.getInstance().get(Calendar.YEAR)
             val month = Calendar.getInstance().get(Calendar.MONTH)
             val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-            noteEnd = "$day/$month/$year"
+            noteEnd = "$year/$month/$day"
         }
 
         val fab = findViewById<FloatingActionButton>(R.id.saveEditedNote)
@@ -117,7 +117,7 @@ class EditNote : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
         val mon = month + 1
 
-        noteEnd = "$day/$mon/$year"
+        noteEnd = "$year/$mon/$day"
         btnDate.text = noteEnd
     }
 }
