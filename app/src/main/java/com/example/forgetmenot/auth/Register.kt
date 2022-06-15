@@ -26,8 +26,6 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-//        getSupportActionBar().setTitle("Connect to FireNotes");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         username = findViewById(R.id.edtName_reg)
         email = findViewById(R.id.edtEmail_reg)
         password = findViewById(R.id.edtPassword_reg)
@@ -51,36 +49,66 @@ class Register : AppCompatActivity() {
             val uUserEmail = email.text.toString()
             val uUserPass = password.text.toString()
             val uConfPass = confirmPass.text.toString()
-            if (uUserEmail.isEmpty() || uUsername.isEmpty() || uUserPass.isEmpty() || uConfPass.isEmpty()) {
+
+            if (uUsername.isNotEmpty() && uUserEmail.isNotEmpty() && uUserPass.isNotEmpty() && uConfPass.isNotEmpty()) {
+                if (uUserEmail.matches(Regex("[a-zA-z0-9._-]+@[a-z]+\\.+[a-z]+"))) {
+                    if (uUserPass.length >= 5) {
+                        if (uUserPass == uConfPass) {
+                            firebaseSignUp()
+                        } else {
+                            confirmPass.error = "Passwords do not match."
+                            Toast.makeText(
+                                this@Register,
+                                "Passwords didn't match.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@Register,
+                            "Please enter a password with at least 5 characters.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@Register,
+                        "Please enter a valid email address.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
                 Toast.makeText(this@Register, "All fields are required.", Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }
-
-            if (uUserPass != uConfPass) {
-                confirmPass.error = "Passwords do not match."
-            }
-
-            spinner.setVisibility(View.VISIBLE)
-
-            val credential = EmailAuthProvider.getCredential(uUserEmail, uUserPass)
-            fAuth!!.currentUser!!.linkWithCredential(credential).addOnSuccessListener {
-                Toast.makeText(this@Register, "Notes are Synced.", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(applicationContext, MainActivity::class.java))
-                val usr = fAuth!!.currentUser
-                val request = UserProfileChangeRequest.Builder()
-                    .setDisplayName(uUsername)
-                    .build()
-                usr!!.updateProfile(request)
-                startActivity(Intent(applicationContext, MainActivity::class.java))
-            }.addOnFailureListener {
-                Toast.makeText(
-                    this@Register,
-                    "Failed to Connect. Try Again.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                spinner.visibility = View.VISIBLE
-            }
         })
+    }
+
+    private fun firebaseSignUp() {
+        spinner.visibility = View.VISIBLE
+
+        val credential =
+            EmailAuthProvider.getCredential(email.text.toString(), password.text.toString())
+
+        fAuth!!.currentUser!!.linkWithCredential(credential).addOnSuccessListener {
+            Toast.makeText(this@Register, "Notes are synced.", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+
+            val usr = fAuth!!.currentUser
+            val request = UserProfileChangeRequest.Builder()
+                .setDisplayName(username.text.toString())
+                .build()
+            usr!!.updateProfile(request)
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+
+        }.addOnFailureListener { e ->
+            Toast.makeText(
+                this@Register,
+                "Failed to register. " + e.message,
+                Toast.LENGTH_SHORT
+            ).show()
+            spinner.visibility = View.GONE
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

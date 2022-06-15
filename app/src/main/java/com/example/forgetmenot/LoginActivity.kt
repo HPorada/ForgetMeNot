@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import com.example.forgetmenot.auth.Register
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onRegClick_log(view: View) {
-        val intent = Intent(this, RegisterActivity::class.java)
+        val intent = Intent(this, Register::class.java)
         startActivity(intent)
     }
 

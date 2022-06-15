@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:minHeight="48dp"
+            android:padding="5dp"
             android:text="Unlocked: "
             android:textSize="18sp" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -48,9 +48,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="120dp"
         app:backgroundTint="@color/dark_blue"
         app:maxImageSize="30dp"
         app:srcCompat="@drawable/ic_baseline_edit_white_24"
+        app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="48dp"
+        app:backgroundTint="@color/dark_blue"
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_baseline_delete_24"
         app:tint="@color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -196,9 +196,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (endDate != null) {
             val year = Calendar.getInstance().get(Calendar.YEAR)
-            val month = Calendar.getInstance().get(Calendar.MONTH)
+            var month = Calendar.getInstance().get(Calendar.MONTH)
             val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
 
+            month += 1
+            
             val curDate = "$year/$month/$day"
 
             val sdf = SimpleDateFormat("yyyy/MM/dd")
