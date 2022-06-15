@@ -200,7 +200,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
 
             month += 1
-            
+
             val curDate = "$year/$month/$day"
 
             val sdf = SimpleDateFormat("yyyy/MM/dd")

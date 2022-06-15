@@ -12,6 +12,7 @@ import com.example.forgetmenot.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import org.w3c.dom.Text
 
 class Login : AppCompatActivity() {
     lateinit var email: EditText
@@ -32,7 +33,7 @@ class Login : AppCompatActivity() {
         password = findViewById(R.id.edtPassword_log)
         btnLogin = findViewById(R.id.btnLogin_log)
         btnRegister = findViewById(R.id.btnRegister_log)
-        forgetPass = findViewById(R.id.tvForgot)
+        forgetPass = findViewById(R.id.tvForgot) as TextView
         spinner = findViewById(R.id.pbLogin)
 
         user = FirebaseAuth.getInstance().currentUser
@@ -76,6 +77,46 @@ class Login : AppCompatActivity() {
                 )
             )
         })
+
+        forgetPass!!.setOnClickListener(View.OnClickListener {
+            if (email.text.toString().isNotEmpty()) {
+                if (email.text.toString() matches (Regex("[a-zA-z0-9._-]+@[a-z]+\\.+[a-z]+"))) {
+                    val warning = AlertDialog.Builder(this)
+                        .setTitle("Are you sure?")
+                        .setMessage("Send me an email to change my password.")
+                        .setPositiveButton(
+                            "Yes"
+                        ) { dialog, which ->
+                            fAuth!!.sendPasswordResetEmail(email.text.toString())
+                                . addOnCompleteListener {
+                                    Toast.makeText(
+                                        this@Login,
+                                        "Email sent.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        }.setNegativeButton(
+                            "No"
+                        ) { dialog, which ->
+                        }
+                    warning.show()
+                } else {
+                    email.error = "Enter an email."
+                    Toast.makeText(
+                        this@Login,
+                        "Please enter a valid email address.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                email.error = "Enter an email."
+                Toast.makeText(
+                    this@Login,
+                    "Enter your email address.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     private fun firebaseSignIn() {
@@ -116,7 +157,6 @@ class Login : AppCompatActivity() {
             }
         }
     }
-
 
     private fun showWarning() {
         val warning = AlertDialog.Builder(this)
