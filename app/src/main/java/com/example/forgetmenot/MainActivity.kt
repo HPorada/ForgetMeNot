@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -56,15 +57,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fAuth = FirebaseAuth.getInstance()
         user = fAuth!!.currentUser
 
+        // prepare query to fetch all user's notes from the database
         val query = fStore!!.collection("notes").document(
             user!!.uid
         ).collection("myNotes").orderBy("title", Query.Direction.DESCENDING)
 
+        // get all user's notes from the database
         val allNotes: FirestoreRecyclerOptions<Note> = FirestoreRecyclerOptions.Builder<Note>()
             .setQuery(query, Note::class.java)
             .build()
 
         noteAdapter = object : FirestoreRecyclerAdapter<Note, NoteViewHolder>(allNotes) {
+
             @RequiresApi(api = Build.VERSION_CODES.M)
             protected override fun onBindViewHolder(
                 noteViewHolder: NoteViewHolder,
@@ -75,19 +79,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 noteViewHolder.noteContent.text = note.content
 
 
-                val docId: String = noteAdapter!!.snapshots.getSnapshot(i).id
+                val docId: String = noteAdapter.snapshots.getSnapshot(i).id
                 noteViewHolder.view.setOnClickListener { v ->
-                    val i = Intent(v.context, NoteDetails::class.java)
-                    i.putExtra("title", note.title)
-                    i.putExtra("content", note.content)
-                    i.putExtra("date", note.endDate)
-                    i.putExtra("noteId", docId)
-                    v.context.startActivity(i)
+
+                    val check = checkDate(note.endDate)
+
+                    if (check) {
+                        val i = Intent(v.context, NoteDetails::class.java)
+                        i.putExtra("title", note.title)
+                        i.putExtra("content", note.content)
+                        i.putExtra("date", note.endDate)
+                        i.putExtra("noteId", docId)
+                        v.context.startActivity(i)
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "The note will unlock on ${note.endDate}.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
+                // Menu at every note: edit and delete
                 val menuIcon = noteViewHolder.view.findViewById<ImageView>(R.id.menuIcon)
                 menuIcon.setOnClickListener { view ->
-                    val docId: String = noteAdapter!!.snapshots.getSnapshot(i).id
+                    val docId: String = noteAdapter.snapshots.getSnapshot(i).id
                     val menu = PopupMenu(view.context, view)
                     menu.gravity = Gravity.END
                     menu.menu.add("Edit").setOnMenuItemClickListener {
@@ -162,6 +178,41 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     AddImageActivity::class.java
                 )
             )
+        }
+    }
+
+    private fun checkDate(endDate: String?): Boolean {
+
+        if (endDate != null) {
+            val year = Calendar.getInstance().get(Calendar.YEAR)
+            val month = Calendar.getInstance().get(Calendar.MONTH)
+            val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+
+            val curDate = "$day/$month/$year"
+
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
+
+            val cur: Date = sdf.parse(curDate) as Date
+            val end: Date = endDate?.let { sdf.parse(it) } as Date
+
+            val cmp = cur.compareTo(end)
+
+            return when {
+                cmp > 0 -> {
+                    // Cur is after End
+                    true
+                }
+                cmp < 0 -> {
+                    // Cur is before End
+                    false
+                }
+                else -> {
+                    // Dates are equal
+                    true
+                }
+            }
+        } else {
+            return true
         }
     }
 

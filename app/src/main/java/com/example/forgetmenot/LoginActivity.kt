@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
         fAuth.signInWithEmailAndPassword(username.text.toString(), password.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Login successful.", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -70,17 +70,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validateLoginForm() {
-//        val icon: Drawable = resources.getDrawable(R.drawable.warning)
-//        val icon = ContextCompat.getDrawable(this, R.drawable.warning)
-//
-//        icon?.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
 
         when {
             TextUtils.isEmpty(username.text.toString().trim()) -> {
-                username.setError("Please enter an email", null)
+                username.setError("Please enter an email.", null)
             }
             TextUtils.isEmpty(password.text.toString().trim()) -> {
-                password.setError("Please enter a password", null)
+                password.setError("Please enter a password.", null)
             }
 
             username.text.toString().isNotEmpty() &&
@@ -90,12 +86,12 @@ class LoginActivity : AppCompatActivity() {
                         firebaseSignIn()
                     } else {
                         password.setError(
-                            "Please enter a password with at least 5 characters",
+                            "Please enter a password with at least 5 characters.",
                             null
                         )
                     }
                 } else {
-                    username.setError("Please enter a valid email address", null)
+                    username.setError("Please enter a valid email address.", null)
                 }
             }
         }
